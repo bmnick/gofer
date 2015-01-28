@@ -3,4 +3,5 @@ platform :ios, '8.0'
 
 pod 'Stripe', '~> 3.1'
 pod 'Stripe/ApplePay', '~> 3.1'
+pod 'PaymentKit', '~> 1.1'
 pod 'Parse', '~> 1.6'
