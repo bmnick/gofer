@@ -32,9 +32,76 @@
                             <constraint firstAttribute="centerX" secondItem="MMx-FH-c0R" secondAttribute="centerX" id="rfY-fi-W4J"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <segue destination="jk3-8r-3QT" kind="presentation" identifier="manualCardDetails" id="PkV-Y5-G2G"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="484" y="-78"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="PTP-jP-oIg">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="i3D-qG-Ndq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController id="jk3-8r-3QT" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="3on-Ph-cAO">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="aho-jQ-82Z" kind="relationship" relationship="rootViewController" id="ixI-jF-d7K"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="1202" y="-78"/>
+        </scene>
+        <!--Payment View Controller-->
+        <scene sceneID="ynG-o2-HCL">
+            <objects>
+                <viewController id="aho-jQ-82Z" customClass="PaymentViewController" customModule="Gofer" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="o6Q-I7-Owr"/>
+                        <viewControllerLayoutGuide type="bottom" id="fjZ-I3-fKM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="EC9-W9-qLr">
+                        <rect key="frame" x="0.0" y="64" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ucZ-23-aFi" customClass="PTKView">
+                                <rect key="frame" x="155" y="84" width="290" height="55"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="55" id="Oyd-yU-Of2"/>
+                                    <constraint firstAttribute="width" constant="290" id="rky-0g-h5R"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ucZ-23-aFi" firstAttribute="top" secondItem="o6Q-I7-Owr" secondAttribute="bottom" constant="20" id="BCC-a0-PG5"/>
+                            <constraint firstAttribute="centerX" secondItem="ucZ-23-aFi" secondAttribute="centerX" id="BKV-7s-b4g"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="gkF-A2-oS9">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="p9s-94-1ow">
+                            <connections>
+                                <action selector="cancel:" destination="aho-jQ-82Z" id="pMC-hi-6vU"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Order" id="f0f-rg-RCH">
+                            <connections>
+                                <action selector="submitOrder:" destination="aho-jQ-82Z" id="TF5-FY-lPn"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="paymentView" destination="ucZ-23-aFi" id="dwi-8c-j08"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="O1B-MG-EQ5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1922" y="-78"/>
         </scene>
     </scenes>
 </document>

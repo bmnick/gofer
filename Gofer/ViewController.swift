@@ -11,6 +11,8 @@ import Parse
 
 class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDelegate {
 
+    private let client = STPAPIClient(publishableKey: "pk_test_bEG0Z8g1DGo7BxhixB9LaODF")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -26,6 +28,7 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
             
             presentViewController(paymentController, animated: true, completion: nil)
         } else {
+            performSegueWithIdentifier("manualCardDetails", sender: nil)
             // ApplePay not supported... PaymentKit to the resue?
         }
     }
@@ -42,7 +45,6 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
     }
     
     func paymentAuthorizationViewController(controller: PKPaymentAuthorizationViewController!, didAuthorizePayment payment: PKPayment!, completion: ((PKPaymentAuthorizationStatus) -> Void)!) {
-        let client = STPAPIClient(publishableKey: "pk_test_bEG0Z8g1DGo7BxhixB9LaODF")
         
         client.createTokenWithPayment(payment) { (token: STPToken!, optionalError: NSError!) -> Void in
             if let error = optionalError {
@@ -51,6 +53,29 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
             } else {
                 NSLog("Would be charging on the server now...")
                 completion(.Success)
+            }
+        }
+    }
+    
+    func manualPaymentController(controller: PaymentViewController, withCard paymentCard: PTKCard) {
+        let card = STPCard()
+        card.number = paymentCard.number
+        card.expMonth = paymentCard.expMonth
+        card.expYear = paymentCard.expYear
+        card.cvc = paymentCard.cvc
+        
+        client.createTokenWithCard(card) { (token: STPToken!, optionalError: NSError?) -> Void in
+            if let error = optionalError {
+                let alertController = UIAlertController(title: "Invalid card", message: "try again", preferredStyle: .Alert)
+                
+                let OKAction = UIAlertAction(title: "Try again", style: .Default) { (action) in
+                    return
+                }
+                alertController.addAction(OKAction)
+                
+                self.presentViewController(alertController, animated: true, completion: nil)
+            } else {
+                NSLog("Would be charging on the server now...")
             }
         }
     }
