@@ -40,6 +40,7 @@
 		B54B41DD1A78588100DE2E6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B54B41DE1A78588100DE2E6F /* GoferTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoferTests.swift; sourceTree = "<group>"; };
 		B54B41E81A785E5400DE2E6F /* Gofer-Bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Gofer-Bridge.h"; sourceTree = "<group>"; };
+		B54B41E91A787E0900DE2E6F /* Gofer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Gofer.entitlements; sourceTree = "<group>"; };
 		EF3E96804B2B8299619F1046 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -94,6 +95,7 @@
 		B54B41C51A78588100DE2E6F /* Gofer */ = {
 			isa = PBXGroup;
 			children = (
+				B54B41E91A787E0900DE2E6F /* Gofer.entitlements */,
 				B54B41C81A78588100DE2E6F /* AppDelegate.swift */,
 				B54B41CA1A78588100DE2E6F /* ViewController.swift */,
 				B54B41CC1A78588100DE2E6F /* Main.storyboard */,
@@ -189,6 +191,12 @@
 				TargetAttributes = {
 					B54B41C21A78588100DE2E6F = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = BSL485X9TH;
+						SystemCapabilities = {
+							com.apple.OMC = {
+								enabled = 1;
+							};
+						};
 					};
 					B54B41D71A78588100DE2E6F = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -400,9 +408,18 @@
 			baseConfigurationReference = EF3E96804B2B8299619F1046 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Gofer/Gofer.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					STRIPE_ENABLE_APPLEPAY,
+					"COCOAPODS=1",
+				);
 				INFOPLIST_FILE = Gofer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "gofer/Gofer-Bridge.h";
 			};
 			name = Debug;
@@ -412,9 +429,18 @@
 			baseConfigurationReference = 39CF84CE8BBFE92A75411E77 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Gofer/Gofer.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					STRIPE_ENABLE_APPLEPAY,
+					"COCOAPODS=1",
+				);
 				INFOPLIST_FILE = Gofer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "gofer/Gofer-Bridge.h";
 			};
 			name = Release;
