@@ -26,7 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.setApplicationId("iTzF1yP5NVw3JdRr8oluuGKKpfIJl2Nd7YDTPAhe", clientKey: "uOKWQxHP1hJfbZ0l6O8nZd0502D1CjFAh68a9hVj")
         
         // [Optional] Track statistics around application opens.
-        PFAnalytics.trackAppOpenedWithLaunchOptionsInBackground(nil, block: nil)
+        PFAnalytics.trackAppOpenedWithLaunchOptionsInBackground(launchOptions, block: nil)
+        
+        Stripe.setDefaultPublishableKey(stripePublishableKey)
         
         // Override point for customization after application launch.
         return true
