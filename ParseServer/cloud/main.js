@@ -1,6 +1,5 @@
+var Stripe = require('stripe');
 
-// Use Parse.Cloud.define to define as many cloud functions as you want.
-// For example:
-Parse.Cloud.define("hello", function(request, response) {
-  response.success("Hello world!");
+Parse.Config.get().then(function(config) {
+  stripe.initialize(config.get('stripe_secret_key'));
 });
