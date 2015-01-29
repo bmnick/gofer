@@ -14,6 +14,11 @@ var unpaidState = 0,
 /*
  * Create a CoffeeRequest, authorize payment through stripe, and push the request
  * into a fulfillable state.
+ *
+ * Params:
+ *  destinationAddress: The address we need to deliver to.
+ *  destionationGeo: The geographic coordinates of the delivery.
+ *  token: The stripe token gathered from the user to charge.
  */
  Parse.Cloud.define('requestCoffee', function(request, response) {
    Parse.Cloud.useMasterKey();
@@ -22,19 +27,33 @@ var unpaidState = 0,
 
    Parse.Promise.as().then(function() {
      // Create a new coffee request with the given information
-     var newRequest = new Parse.Object('CoffeeRequest');
-     newRequest.set('destinationAddress', request.params.destinationAddress);
-     newRequest.set('destinationGeo', request.params.destinationGeo);
-     newRequest.set('state', unpaidState);
+     coffeeRequest = new Parse.Object('CoffeeRequest');
+     coffeeRequest.set('destinationAddress', request.params.destinationAddress);
+     coffeeRequest.set('destinationGeo', request.params.destinationGeo);
+     coffeeRequest.set('state', unpaidState);
 
-     return newRequest.save();
+     return newRequest.save().then(null, function(error) {
+       return Parse.Promise.error("Couldn't request the coffee. Your credit card was not charged.");
+     });
 
    }).then(function(result) {
-     // Authorize the payment to stripe
-
+     // Charge their card through Stripe
+     return Stripe.Charges.create({
+       amount: 500,
+       currency: 'usd',
+       card: request.params.token
+     }).then(null, function(error) {
+       return Parse.Promise.error("Couldn't charge your card. Your credit card was not charged.");
+     });
    }).then(function(result) {
      // Move the request to a fulfillable state
+     coffeeRequest.set('state', readyState);
 
+     return coffeeRequest.save().then(null, function(error) {
+       return Parse.Promise.error("A critical error occurred. Please contact us and we'll make it right.");
+     });
+   }).then(function() {
+     response.success('On the way!');
    }, function(error) {
      // This is a global error handler
      if (coffeeRequest) {
