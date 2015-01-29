@@ -1,0 +1,11 @@
+{
+    "applications": {
+        "Gofer": {
+            "applicationId": "iTzF1yP5NVw3JdRr8oluuGKKpfIJl2Nd7YDTPAhe", 
+            "masterKey": "2MRKnr87znaEwkxUDK0Esbhl9lYoJiHa5uQebYzG"
+        }, 
+        "_default": {
+            "link": "Gofer"
+        }
+    }
+}
