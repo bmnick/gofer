@@ -29,14 +29,11 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
             presentViewController(paymentController, animated: true, completion: nil)
         } else {
             performSegueWithIdentifier("manualCardDetails", sender: nil)
-            // ApplePay not supported... PaymentKit to the resue?
         }
     }
     
     override func viewWillAppear(animated: Bool) {
-        var testObject = PFObject(className: "TestObject")
-        testObject["foo"] = "bar"
-        testObject.saveInBackgroundWithBlock(nil)
+        super.viewWillAppear(animated)
     }
 
     override func didReceiveMemoryWarning() {

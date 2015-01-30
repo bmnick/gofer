@@ -26,7 +26,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.51372549019607838" green="0.0" blue="0.60392156862745094" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerY" secondItem="MMx-FH-c0R" secondAttribute="centerY" id="0KO-tg-87a"/>
                             <constraint firstAttribute="centerX" secondItem="MMx-FH-c0R" secondAttribute="centerX" id="rfY-fi-W4J"/>
@@ -43,7 +43,6 @@
         <!--Navigation Controller-->
         <scene sceneID="PTP-jP-oIg">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="i3D-qG-Ndq" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="jk3-8r-3QT" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="3on-Ph-cAO">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -53,6 +52,7 @@
                         <segue destination="aho-jQ-82Z" kind="relationship" relationship="rootViewController" id="ixI-jF-d7K"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="i3D-qG-Ndq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1202" y="-78"/>
         </scene>
