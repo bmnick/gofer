@@ -1,15 +1,18 @@
 var Stripe = require('stripe');
 
-Parse.Config.get().then(function(config) {
-  stripe.initialize(config.get('stripe_secret_key'));
-});
-
 // States for individual requests:
 var unpaidState = 0,
     readyState = 1,
     fulfilledState = 2,
     cancelledState = 3,
     errorState = 4;
+
+/*
+ * Because we need to initialize stripe from config variables, we need to
+ * configure it in a parse context. We also need to only configure it once,
+ * so this flag will ensure that.
+ */
+var initialized = false;
 
 /*
  * Create a CoffeeRequest, authorize payment through stripe, and push the request
@@ -21,6 +24,13 @@ var unpaidState = 0,
  *  token: The stripe token gathered from the user to charge.
  */
  Parse.Cloud.define('requestCoffee', function(request, response) {
+   if (!initialized) {
+     Parse.Config.get().then(function(config) {
+       Stripe.initialize(config.get('stripe_secret_key'));
+       initialized = true;
+     });
+   }
+
    Parse.Cloud.useMasterKey();
 
    var coffeeRequest;
