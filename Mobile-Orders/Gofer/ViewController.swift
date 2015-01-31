@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import Parse
 
-enum Result<T> {
-    case Success(T)
+enum Result {
+    case Success(String)
     case Failure(String)
 }
 
@@ -54,13 +55,13 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
                 completion(.Failure)
                 return
             } else {
-                NSLog("Would be charging on the server now...")
-                let result = self.paymentRequestWithToken(token)
-                switch result {
-                case .Success:
-                    completion(.Success)
-                case .Failure:
-                    completion(.Failure)
+                self.paymentRequestWithToken(token) { (result) -> Void in
+                    switch result {
+                    case .Success:
+                        completion(.Success)
+                    case .Failure:
+                        completion(.Failure)
+                    }
                 }
             }
         }
@@ -73,6 +74,8 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
     // MARK: - PaymentKit interaction
     
     func manualPaymentAuthorization(paymentCard: PTKCard) {
+        coffeeButton.enabled = false
+        
         let card = STPCard()
         card.number = paymentCard.number
         card.expMonth = paymentCard.expMonth
@@ -81,36 +84,15 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
         
         client.createTokenWithCard(card) { (token: STPToken!, optionalError: NSError?) -> Void in
             if let error = optionalError {
-                let alertController = UIAlertController(title: "Invalid card", message: "try again", preferredStyle: .Alert)
-                
-                let OKAction = UIAlertAction(title: "Try again", style: .Default) { (action) in
-                    return
-                }
-                alertController.addAction(OKAction)
-                
-                self.presentViewController(alertController, animated: true, completion: nil)
+                self.alert("Invalid card", body: "Card could not be charged", button: "Try again")
             } else {
-                NSLog("Would be charging on the server now...")
-                let result = self.paymentRequestWithToken(token)
-                switch result {
-                case .Success:
-                    let alertController = UIAlertController(title: "Charged", message: "On the way", preferredStyle: .Alert)
-                    
-                    let OKAction = UIAlertAction(title: "Try again", style: .Default) { (action) in
-                        return
+                self.paymentRequestWithToken(token) {(result) -> Void in
+                    switch result {
+                    case .Success(let response):
+                        self.alert("Charged", body: response, button: "OK")
+                    case .Failure(let problem):
+                        self.alert("Invalid card", body: problem, button: "Try again")
                     }
-                    alertController.addAction(OKAction)
-                    
-                    self.presentViewController(alertController, animated: true, completion: nil)
-                case .Failure:
-                    let alertController = UIAlertController(title: "Invalid card", message: "try again", preferredStyle: .Alert)
-                    
-                    let OKAction = UIAlertAction(title: "Try again", style: .Default) { (action) in
-                        return
-                    }
-                    alertController.addAction(OKAction)
-                    
-                    self.presentViewController(alertController, animated: true, completion: nil)
                 }
             }
         }
@@ -122,8 +104,34 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
     
     // MARK: - Charge and request
     
-    func paymentRequestWithToken(STPToken!) -> Result<String> {
-        return .Failure("unimplemented")
+    func paymentRequestWithToken(token: STPToken!, completion: Result -> Void) {
+        let params = [
+            "destinationAddress" : "683 Linden St.",
+            "destinationGeoLat" : 43.136810,
+            "destinationGeoLong" : -77.595786,
+            "token" : token.tokenId
+        ]
+        PFCloud.callFunctionInBackground("requestCoffee", withParameters: params) { (ret, err) -> Void in
+            if let error = err {
+                completion(.Failure(error.localizedFailureReason!))
+            } else {
+                completion(.Success("success"))
+            }
+        }
+        completion(.Failure("unimplemented"))
+    }
+    
+    // MARK: - Helpers
+    
+    func alert(title: String, body: String, button: String) {
+        let alertController = UIAlertController(title: title, message: body, preferredStyle: .Alert)
+        
+        let OKAction = UIAlertAction(title: button, style: .Default) { (action) in
+            return
+        }
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     // MARK: - IB Actions
