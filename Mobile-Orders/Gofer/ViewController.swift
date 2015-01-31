@@ -8,6 +8,11 @@
 
 import UIKit
 
+enum Result<T> {
+    case Success(T)
+    case Failure(String)
+}
+
 class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDelegate, PTKViewDelegate {
     
     @IBOutlet var cardView: PTKView?
@@ -62,7 +67,13 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
                 return
             } else {
                 NSLog("Would be charging on the server now...")
-                completion(.Success)
+                let result = self.paymentRequestWithToken(token)
+                switch result {
+                case .Success:
+                    completion(.Success)
+                case .Failure:
+                    completion(.Failure)
+                }
             }
         }
     }
@@ -86,8 +97,33 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
                 self.presentViewController(alertController, animated: true, completion: nil)
             } else {
                 NSLog("Would be charging on the server now...")
+                let result = self.paymentRequestWithToken(token)
+                switch result {
+                case .Success:
+                    let alertController = UIAlertController(title: "Charged", message: "On the way", preferredStyle: .Alert)
+                    
+                    let OKAction = UIAlertAction(title: "Try again", style: .Default) { (action) in
+                        return
+                    }
+                    alertController.addAction(OKAction)
+                    
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                case .Failure:
+                    let alertController = UIAlertController(title: "Invalid card", message: "try again", preferredStyle: .Alert)
+                    
+                    let OKAction = UIAlertAction(title: "Try again", style: .Default) { (action) in
+                        return
+                    }
+                    alertController.addAction(OKAction)
+                    
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                }
             }
         }
+    }
+    
+    func paymentRequestWithToken(STPToken!) -> Result<String> {
+        return .Failure("unimplemented")
     }
     
     func paymentAuthorizationViewControllerDidFinish(controller: PKPaymentAuthorizationViewController!) {
