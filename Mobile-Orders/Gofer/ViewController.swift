@@ -115,7 +115,7 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
         ]
         PFCloud.callFunctionInBackground("requestCoffee", withParameters: params) { (ret, err) -> Void in
             if let error = err {
-                completion(.Failure(error.localizedFailureReason!))
+                completion(.Failure(error.userInfo!["error"] as String))
             } else {
                 completion(.Success("success"))
             }
