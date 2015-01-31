@@ -7,10 +7,9 @@
 //
 
 import UIKit
-import Parse
 
 class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDelegate {
-
+    
     private let client = STPAPIClient(publishableKey: "pk_test_bEG0Z8g1DGo7BxhixB9LaODF")
     
     override func viewDidLoad() {
@@ -39,6 +38,10 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
     }
     
     func paymentAuthorizationViewController(controller: PKPaymentAuthorizationViewController!, didAuthorizePayment payment: PKPayment!, completion: ((PKPaymentAuthorizationStatus) -> Void)!) {
