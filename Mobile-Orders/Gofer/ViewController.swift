@@ -22,6 +22,7 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
             cardView?.removeFromSuperview()
         } else {
             cardView?.delegate = self
+            coffeeButton.enabled = false
         }
         // Do any additional setup after loading the view, typically from a nib.
     }

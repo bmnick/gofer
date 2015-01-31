@@ -43,7 +43,7 @@ class FlatButton: UIButton {
             } else {
                 let layer = CAShapeLayer()
                 
-                layer.path = CGPathCreateWithRoundedRect(CGRectOffset(CGRectInset(bounds, 0, 30), 0, 30), 6.0, 6.0, nil)
+                layer.path = CGPathCreateWithRoundedRect(CGRectOffset(CGRectInset(bounds, 0, 5), 0, 5), 6.0, 6.0, nil)
                 layer.fillColor = bottomColor.CGColor
                 
                 _shadowLayer = layer
@@ -77,7 +77,7 @@ class FlatButton: UIButton {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        shadowLayer.path = CGPathCreateWithRoundedRect(CGRectOffset(CGRectInset(bounds, 0, 30), 0, 30), 6.0, 6.0, nil)
+        shadowLayer.path = CGPathCreateWithRoundedRect(CGRectOffset(CGRectInset(bounds, 0, 5), 0, 5), 6.0, 6.0, nil)
         topLayer.path = CGPathCreateWithRoundedRect(CGRectOffset(CGRectInset(bounds, 0, 5), 0, -5), 6.0, 6.0, nil)
         textLayer.position = CGPoint(
             x: (CGRectGetWidth(bounds)) / 2,
@@ -113,6 +113,19 @@ class FlatButton: UIButton {
             topLayer.setAffineTransform(translation)
             textLayer.setAffineTransform(translation)
             textLayer.foregroundColor = UIColor(white: 1.0, alpha: highlighted ? 0.5 : 1.0).CGColor
+        }
+    }
+    
+    override var enabled: Bool {
+        didSet {
+            let alpha: Float = enabled ? 1.0 : 0.5
+            let translation = enabled ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, 10)
+            
+            textLayer.opacity = alpha
+            textLayer.setAffineTransform(translation)
+            topLayer.opacity = alpha
+            topLayer.setAffineTransform(translation)
+            shadowLayer.opacity = alpha
         }
     }
 }
