@@ -20,7 +20,8 @@ var initialized = false;
  *
  * Params:
  *  destinationAddress: The address we need to deliver to.
- *  destionationGeo: The geographic coordinates of the delivery.
+ *  destionationGeoLat: The latitude of the geographic coordinates of the delivery.
+ *  destionationGeoLong: The longitude of the geographic coordinates of the delivery.
  *  token: The stripe token gathered from the user to charge.
  */
  Parse.Cloud.define('requestCoffee', function(request, response) {
@@ -39,8 +40,11 @@ var initialized = false;
      // Create a new coffee request with the given information
      coffeeRequest = new Parse.Object('CoffeeRequest');
      coffeeRequest.set('destinationAddress', request.params.destinationAddress);
-     coffeeRequest.set('destinationGeo', request.params.destinationGeo);
      coffeeRequest.set('state', unpaidState);
+     coffeeRequest.set('destinationGeo', new Parse.GeoPoint({
+       latitude: request.params.destinationGeoLat,
+       longitude: request.params.destinationGeoLong
+     }));
 
      return newRequest.save().then(null, function(error) {
        return Parse.Promise.error("Couldn't request the coffee. Your credit card was not charged.");
