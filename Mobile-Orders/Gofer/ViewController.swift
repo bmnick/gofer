@@ -31,21 +31,7 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
         }
         // Do any additional setup after loading the view, typically from a nib.
     }
-    
-    @IBAction func getCoffee(sender: UIButton) {
-        let paymentRequest = Stripe.paymentRequestWithMerchantIdentifier("merchant.coffee.gofer")
-        paymentRequest.paymentSummaryItems = [PKPaymentSummaryItem(label: "Coffee Delivery", amount: NSDecimalNumber(string: "5.00"))]
-        
-        if Stripe.canSubmitPaymentRequest(paymentRequest) {
-            let paymentController = PKPaymentAuthorizationViewController(paymentRequest: paymentRequest)
-            paymentController.delegate = self
-            
-            presentViewController(paymentController, animated: true, completion: nil)
-        } else {
-            manualPaymentAuthorization(cardView!.card)
-        }
-    }
-    
+
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
     }
@@ -58,6 +44,8 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
     }
+    
+    // MARK: - Apple Pay interaction
     
     func paymentAuthorizationViewController(controller: PKPaymentAuthorizationViewController!, didAuthorizePayment payment: PKPayment!, completion: ((PKPaymentAuthorizationStatus) -> Void)!) {
         
@@ -77,6 +65,12 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
             }
         }
     }
+    
+    func paymentAuthorizationViewControllerDidFinish(controller: PKPaymentAuthorizationViewController!) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    // MARK: - PaymentKit interaction
     
     func manualPaymentAuthorization(paymentCard: PTKCard) {
         let card = STPCard()
@@ -122,16 +116,31 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
         }
     }
     
+    func paymentView(paymentView: PTKView!, withCard card: PTKCard!, isValid valid: Bool) {
+        coffeeButton.enabled = valid
+    }
+    
+    // MARK: - Charge and request
+    
     func paymentRequestWithToken(STPToken!) -> Result<String> {
         return .Failure("unimplemented")
     }
     
-    func paymentAuthorizationViewControllerDidFinish(controller: PKPaymentAuthorizationViewController!) {
-        dismissViewControllerAnimated(true, completion: nil)
+    // MARK: - IB Actions
+    
+    @IBAction func getCoffee(sender: UIButton) {
+        let paymentRequest = Stripe.paymentRequestWithMerchantIdentifier("merchant.coffee.gofer")
+        paymentRequest.paymentSummaryItems = [PKPaymentSummaryItem(label: "Coffee Delivery", amount: NSDecimalNumber(string: "5.00"))]
+        
+        if Stripe.canSubmitPaymentRequest(paymentRequest) {
+            let paymentController = PKPaymentAuthorizationViewController(paymentRequest: paymentRequest)
+            paymentController.delegate = self
+            
+            presentViewController(paymentController, animated: true, completion: nil)
+        } else {
+            manualPaymentAuthorization(cardView!.card)
+        }
     }
     
-    func paymentView(paymentView: PTKView!, withCard card: PTKCard!, isValid valid: Bool) {
-        coffeeButton.enabled = valid
-    }
 }
 
