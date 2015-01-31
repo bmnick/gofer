@@ -14,7 +14,6 @@
 		B54B41D01A78588100DE2E6F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B54B41CF1A78588100DE2E6F /* Images.xcassets */; };
 		B54B41D31A78588100DE2E6F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B54B41D11A78588100DE2E6F /* LaunchScreen.xib */; };
 		B54B41DF1A78588100DE2E6F /* GoferTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54B41DE1A78588100DE2E6F /* GoferTests.swift */; };
-		B54B41EB1A788DAA00DE2E6F /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54B41EA1A788DAA00DE2E6F /* PaymentViewController.swift */; };
 		B54B41ED1A7C531900DE2E6F /* FlatButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54B41EC1A7C531900DE2E6F /* FlatButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -43,7 +42,6 @@
 		B54B41DE1A78588100DE2E6F /* GoferTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoferTests.swift; sourceTree = "<group>"; };
 		B54B41E81A785E5400DE2E6F /* Gofer-Bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Gofer-Bridge.h"; sourceTree = "<group>"; };
 		B54B41E91A787E0900DE2E6F /* Gofer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Gofer.entitlements; sourceTree = "<group>"; };
-		B54B41EA1A788DAA00DE2E6F /* PaymentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
 		B54B41EC1A7C531900DE2E6F /* FlatButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlatButton.swift; sourceTree = "<group>"; };
 		EF3E96804B2B8299619F1046 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -103,7 +101,6 @@
 				B54B41EC1A7C531900DE2E6F /* FlatButton.swift */,
 				B54B41C81A78588100DE2E6F /* AppDelegate.swift */,
 				B54B41CA1A78588100DE2E6F /* ViewController.swift */,
-				B54B41EA1A788DAA00DE2E6F /* PaymentViewController.swift */,
 				B54B41CC1A78588100DE2E6F /* Main.storyboard */,
 				B54B41CF1A78588100DE2E6F /* Images.xcassets */,
 				B54B41D11A78588100DE2E6F /* LaunchScreen.xib */,
@@ -288,7 +285,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B54B41CB1A78588100DE2E6F /* ViewController.swift in Sources */,
-				B54B41EB1A788DAA00DE2E6F /* PaymentViewController.swift in Sources */,
 				B54B41ED1A7C531900DE2E6F /* FlatButton.swift in Sources */,
 				B54B41C91A78588100DE2E6F /* AppDelegate.swift in Sources */,
 			);

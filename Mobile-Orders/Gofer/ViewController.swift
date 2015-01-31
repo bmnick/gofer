@@ -8,12 +8,21 @@
 
 import UIKit
 
-class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDelegate {
+class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDelegate, PTKViewDelegate {
+    
+    @IBOutlet var cardView: PTKView?
+    @IBOutlet weak var coffeeButton: FlatButton!
     
     private let client = STPAPIClient(publishableKey: "pk_test_bEG0Z8g1DGo7BxhixB9LaODF")
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if PKPaymentAuthorizationViewController.canMakePayments() {
+            cardView?.removeFromSuperview()
+        } else {
+            cardView?.delegate = self
+        }
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -27,7 +36,7 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
             
             presentViewController(paymentController, animated: true, completion: nil)
         } else {
-            performSegueWithIdentifier("manualCardDetails", sender: nil)
+            manualPaymentAuthorization(cardView!.card)
         }
     }
     
@@ -57,7 +66,7 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
         }
     }
     
-    func manualPaymentController(controller: PaymentViewController, withCard paymentCard: PTKCard) {
+    func manualPaymentAuthorization(paymentCard: PTKCard) {
         let card = STPCard()
         card.number = paymentCard.number
         card.expMonth = paymentCard.expMonth
@@ -82,6 +91,10 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
     
     func paymentAuthorizationViewControllerDidFinish(controller: PKPaymentAuthorizationViewController!) {
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func paymentView(paymentView: PTKView!, withCard card: PTKCard!, isValid valid: Bool) {
+        coffeeButton.enabled = valid
     }
 }
 
