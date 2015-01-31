@@ -46,7 +46,7 @@ var initialized = false;
        longitude: request.params.destinationGeoLong
      }));
 
-     return newRequest.save().then(null, function(error) {
+     return coffeeRequest.save().then(null, function(error) {
        return Parse.Promise.error("Couldn't request the coffee. Your credit card was not charged.");
      });
 
