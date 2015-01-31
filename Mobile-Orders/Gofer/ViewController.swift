@@ -153,5 +153,9 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
         }
     }
     
+    @IBAction func orderAgain(unwindSegue: UIStoryboardSegue) {
+        coffeeButton.enabled = true
+    }
+    
 }
 

@@ -80,8 +80,8 @@ class FlatButton: UIButton {
         shadowLayer.path = CGPathCreateWithRoundedRect(CGRectOffset(CGRectInset(bounds, 0, 5), 0, 5), 6.0, 6.0, nil)
         topLayer.path = CGPathCreateWithRoundedRect(CGRectOffset(CGRectInset(bounds, 0, 5), 0, -5), 6.0, 6.0, nil)
         textLayer.position = CGPoint(
-            x: (CGRectGetWidth(bounds)) / 2,
-            y: (CGRectGetHeight(bounds) - CGRectGetHeight(textLayer.frame)) / 2)
+            x: CGRectGetWidth(bounds) / 2,
+            y: (CGRectGetHeight(bounds) / 2) - 5)
 //        textLayer.frame = bounds
 
     }
@@ -98,6 +98,7 @@ class FlatButton: UIButton {
         layer.addSublayer(shadowLayer)
         layer.addSublayer(topLayer)
         layer.addSublayer(textLayer)
+        titleLabel?.removeFromSuperview()
     }
     
     override var highlighted: Bool {
