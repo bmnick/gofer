@@ -68,7 +68,9 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
     }
     
     func paymentAuthorizationViewControllerDidFinish(controller: PKPaymentAuthorizationViewController!) {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismissViewControllerAnimated(true, completion: { () -> Void in
+            self.performSegueWithIdentifier("requestSuccess", sender: self)
+        })
     }
     
     // MARK: - PaymentKit interaction
@@ -118,7 +120,6 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
                 completion(.Success("success"))
             }
         }
-        completion(.Failure("unimplemented"))
     }
     
     // MARK: - Helpers
@@ -127,6 +128,8 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
         let alertController = UIAlertController(title: title, message: body, preferredStyle: .Alert)
         
         let OKAction = UIAlertAction(title: button, style: .Default) { (action) in
+            self.performSegueWithIdentifier("requestSuccess", sender: self)
+            
             return
         }
         alertController.addAction(OKAction)
