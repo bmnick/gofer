@@ -22,6 +22,7 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
     @IBOutlet weak var logoLabel: UILabel!
     
     private let locationManager = CLLocationManager()
+    private let geocoder = CLGeocoder()
     private let client = STPAPIClient(publishableKey: "pk_test_bEG0Z8g1DGo7BxhixB9LaODF")
     private var hasReceivedLocation: Bool = false
     private var cardIsValid: Bool = false
@@ -188,22 +189,31 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
     // MARK: - Charge and request
     
     func paymentRequestWithToken(token: STPToken!, completion: Result -> Void) {
-        let manager = locationManager
         let location = locationManager.location
-        let coordinate = location.coordinate
-        let params = [
-            "destinationAddress" : "683 Linden St.",
-            "destinationGeoLat" : locationManager.location.coordinate.latitude,
-            "destinationGeoLong" : locationManager.location.coordinate.longitude,
-            "token" : token.tokenId
-        ]
-        PFCloud.callFunctionInBackground("requestCoffee", withParameters: params) { (ret, err) -> Void in
-            if let error = err {
-                completion(.Failure(error.userInfo!["error"] as String))
+        
+        geocoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
+            if let err = error {
+                completion(.Failure(error.description))
             } else {
-                completion(.Success("success"))
+                if countElements(placemarks) > 0 {
+                    let place = placemarks.first as CLPlacemark
+                    let params = [
+                        "destinationAddress" : place.subThoroughfare + " " + place.thoroughfare + " " + place.locality + ", " + place.administrativeArea + place.postalCode,
+                        "destinationGeoLat" : location.coordinate.latitude,
+                        "destinationGeoLong" : location.coordinate.longitude,
+                        "token" : token.tokenId
+                    ]
+                    
+                    PFCloud.callFunctionInBackground("requestCoffee", withParameters: params) { (ret, err) -> Void in
+                        if let error = err {
+                            completion(.Failure(error.userInfo!["error"] as String))
+                        } else {
+                            completion(.Success("success"))
+                        }
+                    }
+                }
             }
-        }
+        })
     }
     
     // MARK: - Helpers
