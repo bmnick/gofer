@@ -8,19 +8,23 @@
 
 import UIKit
 import Parse
+import CoreLocation
 
 enum Result {
     case Success(String)
     case Failure(String)
 }
 
-class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDelegate, PTKViewDelegate {
+class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDelegate, PTKViewDelegate, CLLocationManagerDelegate {
     
     @IBOutlet var cardView: PTKView!
     @IBOutlet weak var coffeeButton: FlatButton!
     @IBOutlet weak var logoLabel: UILabel!
     
+    private let locationManager = CLLocationManager()
     private let client = STPAPIClient(publishableKey: "pk_test_bEG0Z8g1DGo7BxhixB9LaODF")
+    private var hasReceivedLocation: Bool = false
+    private var cardIsValid: Bool = false
     
     func buttonTransform() -> CGAffineTransform {
         var buttonTransform = CGAffineTransformMakeTranslation(-1000, 0)
@@ -48,11 +52,18 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
         
         if PKPaymentAuthorizationViewController.canMakePayments() {
             cardView?.removeFromSuperview()
+            cardIsValid = true
         } else {
             cardView?.delegate = self
-            coffeeButton.enabled = false
         }
-        // Do any additional setup after loading the view, typically from a nib.
+        coffeeButton.enabled = false
+        
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.startUpdatingLocation()
+        }
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -87,6 +98,25 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
+    }
+    
+    // MARK: - Location Delegate
+    
+    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        switch status {
+        case .NotDetermined:
+            return
+        case .Authorized, .AuthorizedWhenInUse:
+            locationManager.startUpdatingLocation()
+        case .Denied, .Restricted:
+            return
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        hasReceivedLocation = true
+        
+        coffeeButton.enabled = hasReceivedLocation && cardIsValid
     }
     
     // MARK: - Apple Pay interaction
@@ -151,16 +181,20 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
     }
     
     func paymentView(paymentView: PTKView!, withCard card: PTKCard!, isValid valid: Bool) {
-        coffeeButton.enabled = valid
+        cardIsValid = valid
+        coffeeButton.enabled = hasReceivedLocation && cardIsValid
     }
     
     // MARK: - Charge and request
     
     func paymentRequestWithToken(token: STPToken!, completion: Result -> Void) {
+        let manager = locationManager
+        let location = locationManager.location
+        let coordinate = location.coordinate
         let params = [
             "destinationAddress" : "683 Linden St.",
-            "destinationGeoLat" : 43.136810,
-            "destinationGeoLong" : -77.595786,
+            "destinationGeoLat" : locationManager.location.coordinate.latitude,
+            "destinationGeoLong" : locationManager.location.coordinate.longitude,
             "token" : token.tokenId
         ]
         PFCloud.callFunctionInBackground("requestCoffee", withParameters: params) { (ret, err) -> Void in

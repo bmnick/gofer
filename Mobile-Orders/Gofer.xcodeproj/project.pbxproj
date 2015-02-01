@@ -16,6 +16,7 @@
 		B54B41DF1A78588100DE2E6F /* GoferTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54B41DE1A78588100DE2E6F /* GoferTests.swift */; };
 		B54B41ED1A7C531900DE2E6F /* FlatButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54B41EC1A7C531900DE2E6F /* FlatButton.swift */; };
 		B571D1CF1A7D8EC800EACD22 /* SuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B571D1CE1A7D8EC800EACD22 /* SuccessViewController.swift */; };
+		B571D1D11A7DDAF000EACD22 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B571D1D01A7DDAF000EACD22 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,7 @@
 		B54B41E91A787E0900DE2E6F /* Gofer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Gofer.entitlements; sourceTree = "<group>"; };
 		B54B41EC1A7C531900DE2E6F /* FlatButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlatButton.swift; sourceTree = "<group>"; };
 		B571D1CE1A7D8EC800EACD22 /* SuccessViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessViewController.swift; sourceTree = "<group>"; };
+		B571D1D01A7DDAF000EACD22 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		EF3E96804B2B8299619F1046 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -53,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B571D1D11A7DDAF000EACD22 /* CoreLocation.framework in Frameworks */,
 				7CED72A371F1E0D929CBCED5 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -141,6 +144,7 @@
 		DB938DF3BFD24483E852BC7D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B571D1D01A7DDAF000EACD22 /* CoreLocation.framework */,
 				2F177E35E443BE8269DD031F /* libPods.a */,
 			);
 			name = Frameworks;
@@ -416,6 +420,7 @@
 			baseConfigurationReference = EF3E96804B2B8299619F1046 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Gofer/Gofer.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -437,6 +442,7 @@
 			baseConfigurationReference = 39CF84CE8BBFE92A75411E77 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Gofer/Gofer.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
