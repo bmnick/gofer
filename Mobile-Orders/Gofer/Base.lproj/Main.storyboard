@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MMx-FH-c0R" customClass="FlatButton" customModule="Gofer" customModuleProvider="target">
-                                <rect key="frame" x="20" y="113" width="560" height="467"/>
+                                <rect key="frame" x="20" y="248" width="560" height="332"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="Futura-CondensedExtraBold" family="Futura" pointSize="35"/>
                                 <state key="normal" title="Coffee">
@@ -28,8 +28,14 @@
                                     <action selector="getCoffee:" destination="BYZ-38-t0r" eventType="touchUpInside" id="K15-LO-Jz3"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gofer ☕️" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AQh-kf-1wH">
+                                <rect key="frame" x="235" y="80" width="132" height="45"/>
+                                <fontDescription key="fontDescription" name="Futura-CondensedExtraBold" family="Futura" pointSize="35"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hL6-i8-pNh" customClass="PTKView">
-                                <rect key="frame" x="155" y="40" width="290" height="55"/>
+                                <rect key="frame" x="155" y="185" width="290" height="55"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="290" id="1lG-R3-n1u"/>
@@ -40,18 +46,29 @@
                         <color key="backgroundColor" red="0.51372549019607838" green="0.0" blue="0.60392156862745094" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="hL6-i8-pNh" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="KYh-bJ-tNF"/>
-                            <constraint firstItem="MMx-FH-c0R" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" priority="750" constant="20" id="TJv-AH-lO9"/>
+                            <constraint firstItem="MMx-FH-c0R" firstAttribute="top" secondItem="AQh-kf-1wH" secondAttribute="bottom" priority="750" constant="60" id="QSy-9N-9cf"/>
                             <constraint firstAttribute="centerX" secondItem="hL6-i8-pNh" secondAttribute="centerX" id="XGd-ed-PK0"/>
                             <constraint firstItem="MMx-FH-c0R" firstAttribute="top" secondItem="hL6-i8-pNh" secondAttribute="bottom" constant="18" id="XXv-Vd-pTh"/>
+                            <constraint firstItem="MMx-FH-c0R" firstAttribute="top" secondItem="hL6-i8-pNh" secondAttribute="bottom" constant="20" id="fe3-AQ-wfK"/>
+                            <constraint firstAttribute="centerX" secondItem="AQh-kf-1wH" secondAttribute="centerX" id="mS3-O1-gD3"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="MMx-FH-c0R" secondAttribute="bottom" constant="20" id="prT-wx-3Xy"/>
                             <constraint firstAttribute="trailing" secondItem="MMx-FH-c0R" secondAttribute="trailing" constant="20" id="sGl-lH-hA4"/>
                             <constraint firstItem="MMx-FH-c0R" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="tbs-PU-Vi3"/>
+                            <constraint firstItem="AQh-kf-1wH" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="60" id="yqT-Tr-KBK"/>
+                            <constraint firstItem="hL6-i8-pNh" firstAttribute="top" secondItem="AQh-kf-1wH" secondAttribute="bottom" constant="60" id="z3U-cz-Fj7"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="KYh-bJ-tNF"/>
+                                <exclude reference="XXv-Vd-pTh"/>
+                            </mask>
+                        </variation>
                     </view>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <outlet property="cardView" destination="hL6-i8-pNh" id="wvh-jF-QGK"/>
                         <outlet property="coffeeButton" destination="MMx-FH-c0R" id="6RX-V5-gWR"/>
+                        <outlet property="logoLabel" destination="AQh-kf-1wH" id="9ji-dV-IZp"/>
                         <segue destination="Sal-sp-qxN" kind="show" identifier="requestSuccess" id="ACd-FG-Yuq"/>
                     </connections>
                 </viewController>

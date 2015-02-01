@@ -18,6 +18,7 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
     
     @IBOutlet var cardView: PTKView!
     @IBOutlet weak var coffeeButton: FlatButton!
+    @IBOutlet weak var logoLabel: UILabel!
     
     private let client = STPAPIClient(publishableKey: "pk_test_bEG0Z8g1DGo7BxhixB9LaODF")
     
@@ -33,6 +34,13 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
         cardTransform = CGAffineTransformRotate(cardTransform, 0.4)
         
         return cardTransform
+    }
+    
+    func logoTransform() -> CGAffineTransform {
+        var logoTransform = CGAffineTransformMakeTranslation(0, -400)
+        logoTransform = CGAffineTransformRotate(logoTransform, -0.8)
+        
+        return logoTransform
     }
     
     override func viewDidLoad() {
@@ -52,6 +60,7 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
         
         coffeeButton.transform = buttonTransform()
         cardView.transform = cardTransform()
+        logoLabel.transform = logoTransform()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -61,6 +70,9 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
             self.coffeeButton.transform = CGAffineTransformIdentity
         }, completion: nil)
         UIView.animateWithDuration(0.3, delay: 0.1, options: .CurveEaseOut, animations: { () -> Void in
+            self.logoLabel.transform = CGAffineTransformIdentity
+        }, completion: nil)
+        UIView.animateWithDuration(0.3, delay: 0.2, options: .CurveEaseOut, animations: { () -> Void in
             self.cardView.transform = CGAffineTransformIdentity
         }, completion: nil)
     }
