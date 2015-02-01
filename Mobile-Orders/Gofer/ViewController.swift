@@ -21,6 +21,20 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
     
     private let client = STPAPIClient(publishableKey: "pk_test_bEG0Z8g1DGo7BxhixB9LaODF")
     
+    func buttonTransform() -> CGAffineTransform {
+        var buttonTransform = CGAffineTransformMakeTranslation(-1000, 0)
+        buttonTransform = CGAffineTransformRotate(buttonTransform, -0.4)
+        
+        return buttonTransform
+    }
+    
+    func cardTransform() -> CGAffineTransform {
+        var cardTransform = CGAffineTransformMakeTranslation(1000, 0)
+        cardTransform = CGAffineTransformRotate(cardTransform, 0.4)
+        
+        return cardTransform
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,16 +50,8 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        var buttonTransform = CGAffineTransformMakeTranslation(-1000, 0)
-        buttonTransform = CGAffineTransformRotate(buttonTransform, -0.4)
-        
-        var cardTransform = CGAffineTransformMakeTranslation(1000, 0)
-        cardTransform = CGAffineTransformRotate(cardTransform, 0.4)
-        
-        coffeeButton.transform = buttonTransform
-        cardView.transform = cardTransform
-        
-        cardView.resignFirstResponder()
+        coffeeButton.transform = buttonTransform()
+        cardView.transform = cardTransform()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -57,6 +63,9 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
         UIView.animateWithDuration(0.3, delay: 0.1, options: .CurveEaseOut, animations: { () -> Void in
             self.cardView.transform = CGAffineTransformIdentity
         }, completion: nil)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
     }
 
     override func didReceiveMemoryWarning() {
@@ -91,7 +100,14 @@ class ViewController: UIViewController, PKPaymentAuthorizationViewControllerDele
     
     func paymentAuthorizationViewControllerDidFinish(controller: PKPaymentAuthorizationViewController!) {
         dismissViewControllerAnimated(true, completion: { () -> Void in
-            self.performSegueWithIdentifier("requestSuccess", sender: self)
+            UIView.animateWithDuration(0.3, delay: 0.1, options: .CurveEaseIn, animations: { () -> Void in
+                self.coffeeButton.transform = self.buttonTransform()
+            }, completion: { _ -> Void in
+                self.performSegueWithIdentifier("requestSuccess", sender: self)
+            })
+            UIView.animateWithDuration(0.3, delay: 0.0, options: .CurveEaseIn, animations: { () -> Void in
+                self.cardView.transform = self.cardTransform()
+                }, completion: nil)
         })
     }
     
