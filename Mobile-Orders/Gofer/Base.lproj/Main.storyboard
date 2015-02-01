@@ -100,7 +100,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="nlb-mi-yFA" kind="unwind" unwindAction="orderAgain:" id="Voe-Kg-MHo"/>
+                                    <action selector="handleMore:" destination="Sal-sp-qxN" eventType="touchUpInside" id="r61-cW-2EY"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -122,6 +122,7 @@
                         <outlet property="actionLabel" destination="EaK-kZ-qri" id="MxG-K4-2t0"/>
                         <outlet property="moreButton" destination="hkS-bg-oBu" id="fNi-TK-0s7"/>
                         <outlet property="successLabel" destination="4Zm-uo-Y5p" id="IaH-QF-aJr"/>
+                        <segue destination="nlb-mi-yFA" kind="unwind" identifier="unwindToOrders" unwindAction="orderAgain:" id="HWg-hn-8yY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5SM-H3-QU3" userLabel="First Responder" sceneMemberID="firstResponder"/>

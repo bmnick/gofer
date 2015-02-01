@@ -62,4 +62,17 @@ class SuccessViewController: UIViewController {
         return .LightContent
     }
     
+    @IBAction func handleMore(sender: AnyObject) {
+        UIView.animateWithDuration(0.3, delay: 0.2, options: .CurveEaseOut, animations: { () -> Void in
+            self.actionLabel.transform = self.rightTransform()
+        }, completion: {Bool -> Void in
+            self.performSegueWithIdentifier("unwindToOrders", sender: sender)
+        })
+        UIView.animateWithDuration(0.3, delay: 0.1, options: .CurveEaseOut, animations: { () -> Void in
+            self.moreButton.transform = self.bottomTransform()
+        }, completion: nil)
+        UIView.animateWithDuration(0.3, delay: 0.0, options: .CurveEaseOut, animations: { () -> Void in
+            self.successLabel.transform = self.leftTransform()
+        }, completion: nil)
+    }
 }
