@@ -83,7 +83,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hkS-bg-oBu" customClass="FlatButton" customModule="Gofer" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hkS-bg-oBu" customClass="FlatButton" customModule="Gofer" customModuleProvider="target">
                                 <rect key="frame" x="132" y="447" width="384" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="9IB-Ao-8SW"/>

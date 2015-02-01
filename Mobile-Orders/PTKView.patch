@@ -1,0 +1,13 @@
+--- PTKView.m	2015-01-31 18:54:53.000000000 -0500
++++ PTKViewNew.m	2015-01-31 18:54:42.000000000 -0500
+@@ -230,9 +230,8 @@
+                              [self.cardExpiryField removeFromSuperview];
+                              [self.cardCVCField removeFromSuperview];
+                          }];
++        [self.cardNumberField becomeFirstResponder];
+     }
+-
+-    [self.cardNumberField becomeFirstResponder];
+ }
+ 
+ - (void)stateMeta

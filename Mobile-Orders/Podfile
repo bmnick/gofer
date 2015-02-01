@@ -5,3 +5,8 @@ pod 'Stripe', '~> 3.1'
 pod 'Stripe/ApplePay', '~> 3.1'
 pod 'PaymentKit', '~> 1.1'
 pod 'Parse', '~> 1.6'
+
+post_install do |installer|
+    puts 'Patching PaymentKit to not autofocus'
+    %x(patch Pods/PaymentKit/PaymentKit/PTKView.m < PTKView.patch)
+end
