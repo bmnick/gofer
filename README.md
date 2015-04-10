@@ -1,6 +1,8 @@
 # Gofer
 
-Gofer is a multi-component service for instant ordering of coffee to be delivered to you. It is currently built as a minimum viable product against a Parse backend and Stripe as a payment processor, due to their ease of integration and support for ApplePay.
+Gofer was intended to be a multi-component service for instant ordering of coffee to be delivered to you. It is currently built as a minimum viable product against a Parse backend and Stripe as a payment processor, due to their ease of integration and support for ApplePay. 
+
+Because of some issues with real life intruding on business ideas, it has been shelved. The app currently stands as something just short of an MVP that could be easily improved to work for other, similar ideas. All API tokens within the source have been revoked.
 
 ## Eventual components
 
